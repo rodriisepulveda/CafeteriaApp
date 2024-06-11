@@ -18,7 +18,7 @@ public class VistaEmpleado extends BaseLayout {
 
     public VistaEmpleado() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 450, 300);
+        setBounds(100, 100, 462, 329);
         contentPane = getMainPanel();
         contentPane.setLayout(null);
 
@@ -38,7 +38,7 @@ public class VistaEmpleado extends BaseLayout {
 
         JButton btnGestionarPedidos = new JButton("Gestionar Pedidos");
         btnGestionarPedidos.setBackground(new Color(51, 153, 255));
-        btnGestionarPedidos.setForeground(Color.WHITE);
+        btnGestionarPedidos.setForeground(new Color(0, 0, 0));
         btnGestionarPedidos.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnGestionarPedidos.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -51,7 +51,7 @@ public class VistaEmpleado extends BaseLayout {
 
         JButton btnGestionarInventario = new JButton("Gestionar Inventario");
         btnGestionarInventario.setBackground(new Color(51, 153, 255));
-        btnGestionarInventario.setForeground(Color.WHITE);
+        btnGestionarInventario.setForeground(new Color(0, 0, 0));
         btnGestionarInventario.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnGestionarInventario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -64,7 +64,7 @@ public class VistaEmpleado extends BaseLayout {
 
         JButton btnCerrarSesion = new JButton("Cerrar Sesión");
         btnCerrarSesion.setBackground(new Color(51, 153, 255));
-        btnCerrarSesion.setForeground(Color.WHITE);
+        btnCerrarSesion.setForeground(new Color(0, 0, 0));
         btnCerrarSesion.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnCerrarSesion.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

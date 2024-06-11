@@ -4,7 +4,7 @@ import java.util.List;
 
 public class Compra {
     private int id;
-    private Usuario cliente; // Cambiado a Usuario
+    private Usuario cliente; // 
     private List<DetalleCompra> detalles;
 
     public Compra(int id, Usuario cliente, List<DetalleCompra> detalles) {

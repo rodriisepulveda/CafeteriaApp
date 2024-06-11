@@ -26,7 +26,7 @@ public class RealizarCompra extends BaseLayout {
 
         JButton btnRealizarCompra = new JButton("Realizar Compra");
         btnRealizarCompra.setBackground(new Color(51, 153, 255));
-        btnRealizarCompra.setForeground(Color.WHITE);
+        btnRealizarCompra.setForeground(Color.BLACK);
         btnRealizarCompra.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnRealizarCompra.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -40,7 +40,7 @@ public class RealizarCompra extends BaseLayout {
       
         JButton btnVolver = new JButton("Volver");
         btnVolver.setBackground(new Color(51, 153, 255));
-        btnVolver.setForeground(Color.WHITE);
+        btnVolver.setForeground(Color.BLACK);
         btnVolver.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnVolver.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

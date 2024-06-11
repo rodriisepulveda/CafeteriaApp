@@ -40,7 +40,7 @@ public class Main extends BaseLayout {
         super();
         JPanel mainPanel = getMainPanel();
 
-        JLabel lblTitle = new JLabel("Bienvenido a la Cafetería");
+        JLabel lblTitle = new JLabel("Bienvenido CafeteríaAPP");
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
         lblTitle.setBounds(157, 23, 250, 25);
         mainPanel.add(lblTitle);
