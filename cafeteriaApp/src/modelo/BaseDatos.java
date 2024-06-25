@@ -1,5 +1,6 @@
 package modelo;
 
+import java.math.BigDecimal;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -192,8 +193,46 @@ public class BaseDatos {
         return null;
     }
 
-    
-    
+    public boolean eliminarProducto(int id) {
+        String query = "DELETE FROM Producto WHERE id = ?";
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setInt(1, id);
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 
+    public boolean modificarProducto(int id, String nombre, BigDecimal precio) {
+        String query = "UPDATE Producto SET nombre = ?, precio = ? WHERE id = ?";
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nombre);
+            stmt.setBigDecimal(2, precio);
+            stmt.setInt(3, id);
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean insertarProducto(String nombre, BigDecimal precio) {
+        String query = "INSERT INTO Producto (nombre, precio) VALUES (?, ?)";
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nombre);
+            stmt.setBigDecimal(2, precio);
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
 }
 

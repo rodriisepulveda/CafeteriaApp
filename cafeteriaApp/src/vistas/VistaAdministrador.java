@@ -48,7 +48,9 @@ public class VistaAdministrador extends BaseLayout {
         btnGestionarInventario.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnGestionarInventario.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
-                JOptionPane.showMessageDialog(null, "Gestión de inventario no implementada.");
+                VistaGestionProductos vistaGestionProductos = new VistaGestionProductos();
+                vistaGestionProductos.setVisible(true);
+                dispose(); 
             }
         });
         btnGestionarInventario.setBounds(125, 80, 180, 30);

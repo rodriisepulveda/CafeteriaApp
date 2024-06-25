@@ -48,7 +48,6 @@ public class Login extends BaseLayout {
 
         JPanel mainPanel = getMainPanel();
 
-        // Título
         JLabel lblTitle = new JLabel("Inicio de Sesión");
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
         lblTitle.setBounds(125, 20, 200, 25);

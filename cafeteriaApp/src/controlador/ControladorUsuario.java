@@ -1,8 +1,7 @@
 package controlador;
 import modelo.BaseDatos;
 import modelo.Usuario;
-import vistas.Main;
-
+import vistas.VistaAdministrador;
 import javax.swing.*;
 import java.util.List;
 
@@ -61,9 +60,10 @@ public class ControladorUsuario {
                 listarUsuarios();
                 break;
             case 4:
-                Main mainFrame = new Main();
-                mainFrame.setVisible(true);
+                VistaAdministrador vistaAdmin = new VistaAdministrador();
+                vistaAdmin.setVisible(true);
                 break;
+
             default:
                 JOptionPane.showMessageDialog(null, "Opción no válida");
                 mostrarMenuGestionUsuarios();
