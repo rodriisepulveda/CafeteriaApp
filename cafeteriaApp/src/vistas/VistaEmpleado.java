@@ -8,11 +8,10 @@ import java.awt.Insets;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.border.LineBorder;
 
-public class VistaEmpleado extends BaseLayout {
+public class VistaEmpleado extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
@@ -20,7 +19,9 @@ public class VistaEmpleado extends BaseLayout {
     public VistaEmpleado() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setBounds(100, 100, 800, 600);
-        contentPane = getMainPanel();
+        contentPane = new JPanel();
+        contentPane.setBorder(new LineBorder(new Color(192, 192, 192), 1, true));
+        setContentPane(contentPane);
         contentPane.setLayout(new GridBagLayout());
 
         JPanel panel = new JPanel();
@@ -47,7 +48,9 @@ public class VistaEmpleado extends BaseLayout {
         btnGestionarPedidos.setForeground(Color.BLACK);
         btnGestionarPedidos.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnGestionarPedidos.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "Gestión de pedidos no implementada.");
+            VistaGestionPedidos vistaGestionPedidos = new VistaGestionPedidos();
+            vistaGestionPedidos.setVisible(true);
+            dispose();
         });
         gbc.gridx = 0;
         panel.add(btnGestionarPedidos, gbc);
@@ -60,7 +63,9 @@ public class VistaEmpleado extends BaseLayout {
         btnGestionarInventario.setForeground(Color.BLACK);
         btnGestionarInventario.setFont(new Font("Segoe UI", Font.BOLD, 14));
         btnGestionarInventario.addActionListener(e -> {
-            JOptionPane.showMessageDialog(null, "Gestión de inventario no implementada.");
+            VistaGestionProductos vistaGestionProductos = new VistaGestionProductos();
+            vistaGestionProductos.setVisible(true);
+            dispose();
         });
         panel.add(btnGestionarInventario, gbc);
 
