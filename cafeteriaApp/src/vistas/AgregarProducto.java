@@ -1,70 +1,108 @@
 package vistas;
 
-import javax.swing.*;
-import java.awt.*;
-import java.awt.event.ActionEvent;
+import java.awt.BorderLayout;
+import java.awt.Color;
+import java.awt.Component;
+import java.awt.Dimension;
+import java.awt.Font;
 import java.awt.event.ActionListener;
 import java.math.BigDecimal;
+
+import javax.swing.BorderFactory;
+import javax.swing.Box;
+import javax.swing.BoxLayout;
+import javax.swing.JButton;
+import javax.swing.JComponent;
+import javax.swing.JFrame;
+import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+import javax.swing.JPanel;
+import javax.swing.JTextField;
+import javax.swing.SwingConstants;
+
 import modelo.BaseDatos;
 
-public class AgregarProducto extends BaseLayout {
+public class AgregarProducto extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JTextField textFieldNombre;
     private JTextField textFieldPrecio;
 
     public AgregarProducto() {
-        super();
-        JPanel mainPanel = getMainPanel();
+        setTitle("Agregar Producto");
+        setSize(600, 800);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout(10, 10));
 
-        JLabel lblTitle = new JLabel("Agregar Producto");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        lblTitle.setBounds(125, 20, 250, 25);
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBackground(new Color(60, 63, 65));
+        mainPanel.setBorder(BorderFactory.createEmptyBorder(20, 50, 20, 50));
+        add(mainPanel, BorderLayout.CENTER);
+
+        // Título
+        JLabel lblTitle = new JLabel("Agregar Producto", SwingConstants.CENTER);
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        lblTitle.setForeground(Color.WHITE);
+        lblTitle.setAlignmentX(Component.CENTER_ALIGNMENT);
         mainPanel.add(lblTitle);
 
+        mainPanel.add(Box.createVerticalStrut(20));
 
-        JLabel lblNombre = new JLabel("Nombre del Producto:");
-        lblNombre.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        lblNombre.setBounds(50, 70, 150, 20);
-        mainPanel.add(lblNombre);
+        // Campos del formulario
+        mainPanel.add(crearPanelCampo("Nombre del Producto:", textFieldNombre = new JTextField(20)));
+        mainPanel.add(Box.createVerticalStrut(10));
 
-        textFieldNombre = new JTextField();
-        textFieldNombre.setBounds(200, 70, 190, 25);
-        mainPanel.add(textFieldNombre);
+        mainPanel.add(crearPanelCampo("Precio:", textFieldPrecio = new JTextField(20)));
+        mainPanel.add(Box.createVerticalStrut(20));
 
-
-        JLabel lblPrecio = new JLabel("Precio:");
-        lblPrecio.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        lblPrecio.setBounds(50, 110, 150, 20);
-        mainPanel.add(lblPrecio);
-
-        textFieldPrecio = new JTextField();
-        textFieldPrecio.setBounds(200, 110, 190, 25);
-        mainPanel.add(textFieldPrecio);
-
-        JButton btnAgregar = new JButton("Agregar Producto");
-        btnAgregar.setBackground(new Color(51, 153, 255));
-        btnAgregar.setForeground(Color.BLACK);
-        btnAgregar.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnAgregar.setBounds(150, 160, 180, 30);
-        btnAgregar.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                agregarProducto();
-            }
-        });
+        // Botón para agregar producto
+        JButton btnAgregar = crearBoton("Agregar Producto", e -> agregarProducto());
         mainPanel.add(btnAgregar);
+        mainPanel.add(Box.createVerticalStrut(10));
 
-        JButton btnVolver = new JButton("Volver");
-        btnVolver.setBackground(new Color(51, 153, 255));
-        btnVolver.setForeground(Color.BLACK);
-        btnVolver.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnVolver.setBounds(150, 210, 180, 30);
-        btnVolver.addActionListener(e -> {
+        // Botón para volver
+        JButton btnVolver = crearBoton("Volver", e -> {
             VistaGestionProductos vistaGestionProductos = new VistaGestionProductos();
             vistaGestionProductos.setVisible(true);
             dispose();
         });
         mainPanel.add(btnVolver);
+    }
+
+    private JPanel crearPanelCampo(String labelText, JComponent field) {
+        JPanel panel = new JPanel();
+        panel.setLayout(new BoxLayout(panel, BoxLayout.X_AXIS));
+        panel.setBackground(new Color(60, 63, 65));
+        JLabel label = new JLabel(labelText);
+        label.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        label.setForeground(Color.WHITE);
+        label.setPreferredSize(new Dimension(150, 30));
+        field.setPreferredSize(new Dimension(200, 30));
+        field.setMaximumSize(field.getPreferredSize());
+        panel.add(label);
+        panel.add(field);
+        panel.setAlignmentX(Component.CENTER_ALIGNMENT);
+        return panel;
+    }
+
+    private JButton crearBoton(String texto, ActionListener actionListener) {
+        JButton boton = new JButton(texto);
+        boton.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        boton.setBackground(new Color(75, 110, 175));
+        boton.setForeground(Color.BLACK);
+        boton.setFocusPainted(false);
+        boton.setAlignmentX(CENTER_ALIGNMENT);
+        boton.setMaximumSize(new Dimension(200, 40));
+        boton.setMinimumSize(new Dimension(200, 40));
+        boton.setPreferredSize(new Dimension(200, 40));
+        boton.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(45, 45, 45), 2),
+            BorderFactory.createEmptyBorder(10, 20, 10, 20)
+        ));
+        boton.addActionListener(actionListener);
+        return boton;
     }
 
     private void agregarProducto() {
@@ -93,3 +131,4 @@ public class AgregarProducto extends BaseLayout {
         }
     }
 }
+

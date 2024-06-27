@@ -2,107 +2,92 @@ package vistas;
 
 import java.awt.Color;
 import java.awt.Font;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
-import javax.swing.JLabel;
 import javax.swing.JButton;
+import javax.swing.JLabel;
+import javax.swing.BoxLayout;
+import javax.swing.Box;
+import javax.swing.BorderFactory;
+import java.awt.Dimension;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
 
-public class VistaGestionProductos extends BaseLayout {
+public class VistaGestionProductos extends JFrame {
 
     private static final long serialVersionUID = 1L;
 
-    /**
-     * Create the frame.
-     */
     public VistaGestionProductos() {
-        super();
-        JPanel mainPanel = getMainPanel();
+        setTitle("Gestión de Productos");
+        setSize(600, 800);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
+        // Configurar el panel principal
+        JPanel mainPanel = new JPanel();
+        mainPanel.setLayout(new BoxLayout(mainPanel, BoxLayout.Y_AXIS));
+        mainPanel.setBackground(new Color(60, 63, 65));
+        add(mainPanel);
 
+        // Título
         JLabel lblTitle = new JLabel("Gestión de Productos");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        lblTitle.setBounds(125, 20, 250, 25);
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        lblTitle.setForeground(Color.WHITE);
+        lblTitle.setAlignmentX(CENTER_ALIGNMENT);
+        mainPanel.add(Box.createVerticalStrut(30));
         mainPanel.add(lblTitle);
+        mainPanel.add(Box.createVerticalStrut(30));
 
+        // Botones
+        mainPanel.add(crearBoton("Agregar Producto", e -> {
+            AgregarProducto agregarProductoFrame = new AgregarProducto();
+            agregarProductoFrame.setVisible(true);
+            dispose();
+        }));
 
-        JButton btnAgregarProducto = new JButton("Agregar Producto");
-        btnAgregarProducto.setBackground(new Color(51, 153, 255));
-        btnAgregarProducto.setForeground(Color.BLACK);
-        btnAgregarProducto.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnAgregarProducto.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                AgregarProducto agregarProductoFrame = new AgregarProducto();
-                agregarProductoFrame.setVisible(true);
-                dispose();
-            }
-        });
-        btnAgregarProducto.setBounds(145, 70, 180, 30);
-        mainPanel.add(btnAgregarProducto);
+        mainPanel.add(crearBoton("Modificar Producto", e -> {
+            ModificarProducto modificarProductoFrame = new ModificarProducto();
+            modificarProductoFrame.setVisible(true);
+            dispose();
+        }));
 
+        mainPanel.add(crearBoton("Eliminar Producto", e -> {
+            EliminarProducto eliminarProductoFrame = new EliminarProducto();
+            eliminarProductoFrame.setVisible(true);
+            dispose();
+        }));
 
-        JButton btnModificarProducto = new JButton("Modificar Producto");
-        btnModificarProducto.setBackground(new Color(51, 153, 255));
-        btnModificarProducto.setForeground(Color.BLACK);
-        btnModificarProducto.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnModificarProducto.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                ModificarProducto modificarProductoFrame = new ModificarProducto();
-                modificarProductoFrame.setVisible(true);
-                dispose();
-            }
-        });
-        btnModificarProducto.setBounds(145, 111, 180, 30);
-        mainPanel.add(btnModificarProducto);
+        mainPanel.add(crearBoton("Listar Productos", e -> {
+            VistaListarProductos vistaListarProductos = new VistaListarProductos();
+            vistaListarProductos.setVisible(true);
+            dispose();
+        }));
 
+        mainPanel.add(crearBoton("Volver", e -> {
+            VistaAdministrador vistaAdminFrame = new VistaAdministrador();
+            vistaAdminFrame.setVisible(true);
+            dispose();
+        }));
 
-        JButton btnEliminarProducto = new JButton("Eliminar Producto");
-        btnEliminarProducto.setBackground(new Color(51, 153, 255));
-        btnEliminarProducto.setForeground(Color.BLACK);
-        btnEliminarProducto.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnEliminarProducto.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                EliminarProducto eliminarProductoFrame = new EliminarProducto();
-                eliminarProductoFrame.setVisible(true);
-                dispose();
-            }
-        });
-        btnEliminarProducto.setBounds(145, 151, 180, 30);
-        mainPanel.add(btnEliminarProducto);
-
-        JButton btnListarProductos = new JButton("Listar Productos");
-        btnListarProductos.setBackground(new Color(51, 153, 255));
-        btnListarProductos.setForeground(Color.BLACK);
-        btnListarProductos.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnListarProductos.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                VistaListarProductos vistaListarProductos = new VistaListarProductos();
-                vistaListarProductos.setVisible(true);
-                dispose();
-            }
-        });
-        btnListarProductos.setBounds(145, 192, 180, 30);
-        mainPanel.add(btnListarProductos);
-
-        JButton btnVolver = new JButton("Volver al menu ADMINISTRACION");
-        btnVolver.setBackground(new Color(51, 153, 255));
-        btnVolver.setForeground(Color.BLACK);
-        btnVolver.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnVolver.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                VistaAdministrador vistaAdminFrame = new VistaAdministrador();
-                vistaAdminFrame.setVisible(true);
-                dispose();
-            }
-        });
-        btnVolver.setBounds(145, 233, 180, 30);
-        mainPanel.add(btnVolver);
-        
-        
+        mainPanel.add(Box.createVerticalStrut(20));
     }
-    
-    
-    
-    
-    
+
+    private JButton crearBoton(String texto, ActionListener actionListener) {
+        JButton boton = new JButton(texto);
+        boton.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        boton.setBackground(new Color(75, 110, 175));
+        boton.setForeground(Color.BLACK);
+        boton.setFocusPainted(false);
+        boton.setAlignmentX(CENTER_ALIGNMENT);
+        boton.setMaximumSize(new Dimension(250, 50));
+        boton.setMinimumSize(new Dimension(250, 50));
+        boton.setPreferredSize(new Dimension(250, 50));
+        boton.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(45, 45, 45), 2),
+            BorderFactory.createEmptyBorder(10, 20, 10, 20)
+        ));
+        boton.addActionListener(actionListener);
+        return boton;
+    }
+
 }
+

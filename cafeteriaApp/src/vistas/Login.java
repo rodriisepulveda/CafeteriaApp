@@ -1,121 +1,141 @@
 package vistas;
 
+import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Font;
 import javax.swing.JPanel;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JTextField;
+import javax.swing.SwingConstants;
 import javax.swing.JPasswordField;
 import javax.swing.JButton;
-import javax.swing.UIManager;
-import java.awt.EventQueue;
+import javax.swing.JFrame;
+import javax.swing.BorderFactory;
+import java.awt.Dimension;
+import java.awt.GridBagLayout;
+import java.awt.Insets;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import java.awt.GridBagConstraints;
 import controlador.ControladorUsuario;
 import modelo.Usuario;
 
-public class Login extends BaseLayout {
+public class Login extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JTextField textFieldUsuario;
     private JPasswordField passwordField;
     private ControladorUsuario controladorUsuario;
 
-    /**
-     * Launch the application.
-     */
-    public static void main(String[] args) {
-        EventQueue.invokeLater(new Runnable() {
-            public void run() {
-                try {
-                    UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
-
-                    Login frame = new Login();
-                    frame.setVisible(true);
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }
-        });
-    }
-
-    /**
-     * Create the frame.
-     */
     public Login() {
-        controladorUsuario = new ControladorUsuario(); 
+        controladorUsuario = new ControladorUsuario();
+        setTitle("Inicio de Sesión");
+        setSize(600, 800);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        setLocationRelativeTo(null);
 
-        JPanel mainPanel = getMainPanel();
+        // Usar BackgroundPanel para el fondo
+        JPanel mainPanel = new BackgroundPanel("/imgs/coffee.jpg");
+        mainPanel.setLayout(new GridBagLayout());
+        mainPanel.setBackground(new Color(60, 63, 65));
+        add(mainPanel, BorderLayout.CENTER);
 
-        JLabel lblTitle = new JLabel("Inicio de Sesión");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        lblTitle.setBounds(125, 20, 200, 25);
-        mainPanel.add(lblTitle);
+        GridBagConstraints gbc = new GridBagConstraints();
+        gbc.insets = new Insets(10, 10, 10, 10);
+
+        JLabel lblTitle = new JLabel("Inicio de Sesión", SwingConstants.CENTER);
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        lblTitle.setForeground(Color.BLACK);
+        gbc.gridx = 0;
+        gbc.gridy = 0;
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
+        mainPanel.add(lblTitle, gbc);
+
+        gbc.gridwidth = 1;
+        gbc.anchor = GridBagConstraints.EAST;
 
         JLabel lblUsuario = new JLabel("Nombre de usuario:");
-        lblUsuario.setFont(new Font("Trebuchet MS", Font.PLAIN, 14));
-        lblUsuario.setBounds(48, 70, 150, 20);
-        mainPanel.add(lblUsuario);
+        lblUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        lblUsuario.setForeground(Color.BLACK);
+        gbc.gridx = 0;
+        gbc.gridy = 1;
+        mainPanel.add(lblUsuario, gbc);
 
-        textFieldUsuario = new JTextField();
-        textFieldUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        textFieldUsuario.setBounds(200, 70, 150, 25);
-        mainPanel.add(textFieldUsuario);
-        textFieldUsuario.setColumns(10);
+        textFieldUsuario = new JTextField(15);
+        textFieldUsuario.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        gbc.gridx = 1;
+        gbc.gridy = 1;
+        gbc.anchor = GridBagConstraints.WEST;
+        mainPanel.add(textFieldUsuario, gbc);
 
-        JLabel lblContraseña = new JLabel("Password:");
-        lblContraseña.setFont(new Font("Nunito", Font.PLAIN, 14));
-        lblContraseña.setBounds(48, 110, 150, 20);
-        mainPanel.add(lblContraseña);
+        JLabel lblContraseña = new JLabel("Contraseña:");
+        lblContraseña.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        lblContraseña.setForeground(Color.BLACK);
+        gbc.gridx = 0;
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.EAST;
+        mainPanel.add(lblContraseña, gbc);
 
-        passwordField = new JPasswordField();
-        passwordField.setFont(new Font("Tahoma", Font.PLAIN, 14));
-        passwordField.setBounds(200, 110, 150, 25);
-        mainPanel.add(passwordField);
+        passwordField = new JPasswordField(15);
+        passwordField.setFont(new Font("Segoe UI", Font.PLAIN, 16));
+        gbc.gridx = 1;
+        gbc.gridy = 2;
+        gbc.anchor = GridBagConstraints.WEST;
+        mainPanel.add(passwordField, gbc);
 
-        JButton btnIniciarSesion = new JButton("Iniciar sesión");
-        btnIniciarSesion.setBackground(new Color(51, 153, 255));
-        btnIniciarSesion.setForeground(Color.BLACK);
-        btnIniciarSesion.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-        btnIniciarSesion.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                String nombreUsuario = textFieldUsuario.getText();
-                String contraseña = new String(passwordField.getPassword());
+        gbc.gridwidth = 2;
+        gbc.anchor = GridBagConstraints.CENTER;
 
-                Usuario usuario = controladorUsuario.autenticarUsuario(nombreUsuario, contraseña);
-                if (usuario != null) {
-                    if (usuario.getRol().equals("Administrador")) {
-                        JOptionPane.showMessageDialog(null, "Inicio de Sesión como ADMINISTRADOR exitoso");
-                        VistaAdministrador vistaAdmin = new VistaAdministrador();
-                        vistaAdmin.setVisible(true);
-                    } else if (usuario.getRol().equals("Empleado")) {
-                        JOptionPane.showMessageDialog(null, "Inicio de Sesión como EMPLEADO exitoso");
-                        VistaEmpleado vistaEmpleado = new VistaEmpleado();
-                        vistaEmpleado.setVisible(true);
-                    }
-                    dispose(); 
-                } else {
-                    JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
+        JButton btnIniciarSesion = crearBoton("Iniciar sesión", e -> {
+            String nombreUsuario = textFieldUsuario.getText();
+            String contraseña = new String(passwordField.getPassword());
+
+            Usuario usuario = controladorUsuario.autenticarUsuario(nombreUsuario, contraseña);
+            if (usuario != null) {
+                if (usuario.getRol().equals("Administrador")) {
+                    JOptionPane.showMessageDialog(null, "Inicio de Sesión como ADMINISTRADOR exitoso");
+                    VistaAdministrador vistaAdmin = new VistaAdministrador();
+                    vistaAdmin.setVisible(true);
+                } else if (usuario.getRol().equals("Empleado")) {
+                    JOptionPane.showMessageDialog(null, "Inicio de Sesión como EMPLEADO exitoso");
+                    VistaEmpleado vistaEmpleado = new VistaEmpleado();
+                    vistaEmpleado.setVisible(true);
                 }
-            }
-        });
-        btnIniciarSesion.setBounds(145, 160, 130, 30);
-        mainPanel.add(btnIniciarSesion);
-
-        JButton btnMenuPrincipal = new JButton("Menu principal");
-        btnMenuPrincipal.setBackground(new Color(51, 153, 255));
-        btnMenuPrincipal.setForeground(Color.BLACK);
-        btnMenuPrincipal.setFont(new Font("Trebuchet MS", Font.BOLD, 14));
-        btnMenuPrincipal.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Main mainFrame = new Main();
-                mainFrame.setVisible(true);
                 dispose();
+            } else {
+                JOptionPane.showMessageDialog(null, "Credenciales incorrectas");
             }
         });
-        btnMenuPrincipal.setBounds(145, 210, 130, 30);
-        mainPanel.add(btnMenuPrincipal);
+        gbc.gridx = 0;
+        gbc.gridy = 3;
+        mainPanel.add(btnIniciarSesion, gbc);
+
+        JButton btnMenuPrincipal = crearBoton("Menu principal", e -> {
+            Main mainFrame = new Main();
+            mainFrame.setVisible(true);
+            dispose();
+        });
+        gbc.gridy = 4;
+        mainPanel.add(btnMenuPrincipal, gbc);
+    }
+
+    private JButton crearBoton(String texto, ActionListener actionListener) {
+        JButton boton = new JButton(texto);
+        boton.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        boton.setBackground(new Color(75, 110, 175));
+        boton.setForeground(Color.BLACK);
+        boton.setFocusPainted(false);
+        boton.setAlignmentX(CENTER_ALIGNMENT);
+        boton.setMaximumSize(new Dimension(200, 40));
+        boton.setMinimumSize(new Dimension(200, 40));
+        boton.setPreferredSize(new Dimension(200, 40));
+        boton.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(45, 45, 45), 2),
+            BorderFactory.createEmptyBorder(10, 20, 10, 20)
+        ));
+        boton.addActionListener(actionListener);
+        return boton;
     }
 }
 

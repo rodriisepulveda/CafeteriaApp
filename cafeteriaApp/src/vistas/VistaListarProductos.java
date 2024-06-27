@@ -3,50 +3,60 @@ package vistas;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import modelo.BaseDatos;
 import modelo.Producto;
 
-public class VistaListarProductos extends BaseLayout {
+public class VistaListarProductos extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JTable tableProductos;
 
     public VistaListarProductos() {
-        super();
-        JPanel mainPanel = getMainPanel();
-        JLabel lblTitle = new JLabel("Listado de Productos");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
-        lblTitle.setBounds(125, 20, 250, 25);
-        mainPanel.add(lblTitle);
+        setTitle("Listado de Productos");
+        setSize(600, 800);
+        setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+        setLocationRelativeTo(null);
+        setLayout(new BorderLayout());
+
+        JPanel mainPanel = new JPanel(new BorderLayout());
+        mainPanel.setBackground(new Color(60, 63, 65));
+        add(mainPanel, BorderLayout.CENTER);
+
+        JLabel lblTitle = new JLabel("Listado de Productos", SwingConstants.CENTER);
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 26));
+        lblTitle.setForeground(Color.WHITE);
+        mainPanel.add(lblTitle, BorderLayout.NORTH);
+
         tableProductos = new JTable();
         tableProductos.setModel(new DefaultTableModel(
             new Object[][] {},
             new String[] {"ID", "Nombre", "Precio"}
         ));
         JScrollPane scrollPane = new JScrollPane(tableProductos);
-        scrollPane.setBounds(10, 70, 414, 200);
-        mainPanel.add(scrollPane);
+        mainPanel.add(scrollPane, BorderLayout.CENTER);
 
-        JButton btnVolver = new JButton("Volver");
-        btnVolver.setBackground(new Color(51, 153, 255));
-        btnVolver.setForeground(Color.BLACK);
-        btnVolver.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnVolver.setBounds(165, 280, 130, 30);
-        btnVolver.addActionListener(e -> {
+        JPanel buttonPanel = new JPanel();
+        buttonPanel.setLayout(new BoxLayout(buttonPanel, BoxLayout.Y_AXIS));
+        buttonPanel.setBackground(new Color(60, 63, 65));
+        buttonPanel.setBorder(BorderFactory.createEmptyBorder(10, 10, 10, 10));
+        mainPanel.add(buttonPanel, BorderLayout.SOUTH);
+
+        JButton btnVolver = crearBoton("Volver", e -> {
             VistaGestionProductos vistaGestionProductos = new VistaGestionProductos();
             vistaGestionProductos.setVisible(true);
             dispose();
         });
-        mainPanel.add(btnVolver);
+        buttonPanel.add(btnVolver);
 
         cargarDatosProductos();
     }
 
     private void cargarDatosProductos() {
         DefaultTableModel model = (DefaultTableModel) tableProductos.getModel();
-        model.setRowCount(0); //
+        model.setRowCount(0);
 
         BaseDatos baseDatos = new BaseDatos();
         ArrayList<Producto> productos = baseDatos.obtenerProductos();
@@ -58,5 +68,24 @@ public class VistaListarProductos extends BaseLayout {
             model.addRow(new Object[]{id, nombre, precio});
         }
     }
+
+    private JButton crearBoton(String texto, ActionListener actionListener) {
+        JButton boton = new JButton(texto);
+        boton.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        boton.setBackground(new Color(75, 110, 175));
+        boton.setForeground(Color.black);
+        boton.setFocusPainted(false);
+        boton.setAlignmentX(CENTER_ALIGNMENT);
+        boton.setMaximumSize(new Dimension(200, 40));
+        boton.setMinimumSize(new Dimension(200, 40));
+        boton.setPreferredSize(new Dimension(200, 40));
+        boton.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(45, 45, 45), 2),
+            BorderFactory.createEmptyBorder(10, 20, 10, 20)
+        ));
+        boton.addActionListener(actionListener);
+        return boton;
+    }
 }
+
 

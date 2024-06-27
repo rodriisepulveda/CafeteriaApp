@@ -1,111 +1,113 @@
 package vistas;
 
-import java.awt.Color;
+
+import java.awt.Color;	
 import java.awt.Font;
+
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JButton;
 import javax.swing.JLabel;
-import javax.swing.JOptionPane;
 import javax.swing.border.LineBorder;
 import java.awt.event.ActionListener;
-import java.awt.event.ActionEvent;
+import javax.swing.BoxLayout;
+import javax.swing.Box;
+import javax.swing.BorderFactory;
+import java.awt.Dimension;
+
+
 import controlador.ControladorUsuario;
 import controlador.ControladorCompra;
 
-public class VistaAdministrador extends BaseLayout {
+public class VistaAdministrador extends JFrame {
 
     private static final long serialVersionUID = 1L;
     private JPanel contentPane;
     private ControladorUsuario controladorUsuario;
-    private ControladorCompra controladorCompra;
 
     public VistaAdministrador() {
         controladorUsuario = new ControladorUsuario();
-        controladorCompra = new ControladorCompra();
+        new ControladorCompra();
 
+        setTitle("Panel de Administrador");
+        setSize(600, 800);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 456, 510);
-        contentPane = getMainPanel();
-        contentPane.setLayout(null);
+        setLocationRelativeTo(null);
 
-        JPanel panel = new JPanel();
-        panel.setBackground(Color.BLACK);
-        panel.setBorder(new LineBorder(new Color(192, 192, 192), 1, true));
-        panel.setBounds(10, 11, 414, 402);
-        contentPane.add(panel);
-        panel.setLayout(null);
+        contentPane = new JPanel();
+        contentPane.setBackground(new Color(60, 63, 65));
+        contentPane.setBorder(new LineBorder(Color.LIGHT_GRAY, 2, true));
+        contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+        setContentPane(contentPane);
+        
+
+
+
 
         JLabel lblTitle = new JLabel("Panel de Administrador");
-        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
+        lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 26));
         lblTitle.setForeground(Color.WHITE);
-        lblTitle.setBounds(125, 20, 200, 25);
-        panel.add(lblTitle);
-
-        JButton btnGestionarInventario = new JButton("Gestionar Inventario");
-        btnGestionarInventario.setBackground(new Color(51, 153, 255));
-        btnGestionarInventario.setForeground(Color.BLACK);
-        btnGestionarInventario.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnGestionarInventario.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                VistaGestionProductos vistaGestionProductos = new VistaGestionProductos();
-                vistaGestionProductos.setVisible(true);
-                dispose(); 
-            }
-        });
-        btnGestionarInventario.setBounds(125, 80, 180, 30);
-        panel.add(btnGestionarInventario);
-
-        JButton btnGestionarPedidos = new JButton("Gestionar Pedidos");
-        btnGestionarPedidos.setBackground(new Color(51, 153, 255));
-        btnGestionarPedidos.setForeground(Color.BLACK);
-        btnGestionarPedidos.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnGestionarPedidos.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-
-                JOptionPane.showMessageDialog(null, "Gestión de pedidos no implementada.");
-            }
-        });
-        btnGestionarPedidos.setBounds(125, 130, 180, 30);
-        panel.add(btnGestionarPedidos);
-
-        JButton btnRegistroVentas = new JButton("Registro de Ventas");
-        btnRegistroVentas.setBackground(new Color(51, 153, 255));
-        btnRegistroVentas.setForeground(Color.BLACK);
-        btnRegistroVentas.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnRegistroVentas.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                controladorCompra.mostrarRegistroVentas();
-            }
-        });
-        btnRegistroVentas.setBounds(125, 180, 180, 30);
-        panel.add(btnRegistroVentas);
+        lblTitle.setAlignmentX(CENTER_ALIGNMENT);
+        contentPane.add(Box.createVerticalStrut(30));
+        contentPane.add(lblTitle);
+        contentPane.add(Box.createVerticalStrut(30));
 
 
-        JButton btnGestionarUsuarios = new JButton("Gestionar Usuarios");
-        btnGestionarUsuarios.setBackground(new Color(51, 153, 255));
-        btnGestionarUsuarios.setForeground(Color.BLACK);
-        btnGestionarUsuarios.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnGestionarUsuarios.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                controladorUsuario.mostrarMenuGestionUsuarios();
-            }
-        });
-        btnGestionarUsuarios.setBounds(125, 230, 180, 30);
-        panel.add(btnGestionarUsuarios);
+        contentPane.add(crearBoton("Gestionar Inventario", e -> {
+            VistaGestionProductos vistaGestionProductos = new VistaGestionProductos();
+            vistaGestionProductos.setVisible(true);
+            dispose();
+        }));
 
-        JButton btnCerrarSesion = new JButton("Cerrar Sesión");
-        btnCerrarSesion.setBackground(new Color(51, 153, 255));
-        btnCerrarSesion.setForeground(Color.BLACK);
-        btnCerrarSesion.setFont(new Font("Segoe UI", Font.BOLD, 14));
-        btnCerrarSesion.addActionListener(new ActionListener() {
-            public void actionPerformed(ActionEvent e) {
-                Login loginFrame = new Login();
-                loginFrame.setVisible(true);
-                dispose();
-            }
-        });
-        btnCerrarSesion.setBounds(125, 280, 180, 30);
-        panel.add(btnCerrarSesion);
+        contentPane.add(crearBoton("Gestionar Pedidos", e -> {
+            VistaGestionPedidos vistaGestionPedidos = new VistaGestionPedidos();
+            vistaGestionPedidos.setVisible(true);
+            dispose();
+        }));
+
+        contentPane.add(crearBoton("Registro de Ventas", e -> {
+            VistaRegistroVentas vistaRegistroVentas = new VistaRegistroVentas();
+            vistaRegistroVentas.setVisible(true);
+            dispose();
+        }));
+
+        contentPane.add(crearBoton("Gestionar Usuarios", e -> {
+            controladorUsuario.mostrarGestionUsuarios();
+            dispose();
+        }));
+
+
+        contentPane.add(crearBoton("Cerrar Sesión", e -> {
+            Login loginFrame = new Login();
+            loginFrame.setVisible(true);
+            dispose();
+        }));
+
+        contentPane.add(Box.createVerticalStrut(20));
+
     }
+
+    private JButton crearBoton(String texto, ActionListener actionListener) {
+        JButton boton = new JButton(texto);
+        boton.setFont(new Font("Segoe UI", Font.BOLD, 18));
+        boton.setBackground(new Color(75, 110, 175));
+        boton.setForeground(Color.BLACK);
+        boton.setFocusPainted(false);
+        boton.setAlignmentX(CENTER_ALIGNMENT);
+        boton.setMaximumSize(new Dimension(250, 50));
+        boton.setMinimumSize(new Dimension(250, 50));
+        boton.setPreferredSize(new Dimension(250, 50));
+        boton.setBorder(BorderFactory.createCompoundBorder(
+            BorderFactory.createLineBorder(new Color(45, 45, 45), 2),
+            BorderFactory.createEmptyBorder(10, 20, 10, 20)
+        ));
+        boton.addActionListener(actionListener);
+        return boton;
+    }
+    
+    
+    
 }
+
+
+

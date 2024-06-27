@@ -12,7 +12,7 @@ public class BaseLayout extends JFrame {
 
     public BaseLayout() {
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setBounds(100, 100, 600, 400);
+        setBounds(100, 100, 800, 600); 
         contentPane = new JPanel();
         contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
         setContentPane(contentPane);
@@ -23,10 +23,9 @@ public class BaseLayout extends JFrame {
         contentPane.add(topPanel, BorderLayout.NORTH);
         topPanel.setLayout(new FlowLayout(FlowLayout.LEFT, 5, 5));
 
-        JLabel lblTitle = new JLabel("Cafetería - Gestión del Sistema");
+        JLabel lblTitle = new JLabel("Cafetería");
         lblTitle.setFont(new Font("Segoe UI", Font.BOLD, 20));
         topPanel.add(lblTitle);
-
 
         mainPanel = new JPanel();
         mainPanel.setBorder(new LineBorder(new Color(192, 192, 192), 1, true));

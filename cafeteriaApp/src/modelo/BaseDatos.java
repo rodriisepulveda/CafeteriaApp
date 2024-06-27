@@ -100,24 +100,25 @@ public class BaseDatos {
         return false;
     }
 
-    public String obtenerRegistroVentas() {
-        StringBuilder registro = new StringBuilder("Registro de Ventas:\n");
+    public List<String[]> obtenerRegistroVentas() {
+        List<String[]> ventas = new ArrayList<>();
         String query = "SELECT * FROM vista_ventas";
         try (Connection conn = conectar();
              Statement stmt = conn.createStatement();
              ResultSet rs = stmt.executeQuery(query)) {
             while (rs.next()) {
-                registro.append("ID Compra: ").append(rs.getInt("id_compra"))
-                        .append(", Cliente: ").append(rs.getString("nombre_cliente"))
-                        .append(", Productos: ").append(rs.getString("productos"))
-                        .append(", Precio Total: $").append(rs.getBigDecimal("precio_total"))
-                        .append(", Fecha: ").append(rs.getTimestamp("fecha_compra"))
-                        .append("\n");
+                ventas.add(new String[]{
+                    String.valueOf(rs.getInt("id_compra")),
+                    rs.getString("nombre_cliente"),
+                    rs.getString("productos"),
+                    rs.getBigDecimal("precio_total").toString(),
+                    rs.getTimestamp("fecha_compra").toString()
+                });
             }
         } catch (SQLException e) {
             e.printStackTrace();
         }
-        return registro.toString();
+        return ventas;
     }
 
     public List<Usuario> listarUsuarios() {
@@ -221,6 +222,40 @@ public class BaseDatos {
         }
     }
 
+    public List<String[]> obtenerRegistrosDesdeVista(String vista) {
+        List<String[]> registros = new ArrayList<>();
+        String query = "SELECT * FROM " + vista;
+        try (Connection conn = conectar();
+             Statement stmt = conn.createStatement();
+             ResultSet rs = stmt.executeQuery(query)) {
+            while (rs.next()) {
+                registros.add(new String[]{
+                    rs.getString("id_compra"),
+                    rs.getString("nombre_cliente"),
+                    rs.getString("productos"),
+                    rs.getString("precio_total"),
+                    rs.getString("fecha_compra")
+                });
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return registros;
+    }
+
+    public boolean actualizarEstadoCompra(int idCompra, String nuevoEstado) {
+        String query = "UPDATE Compra SET estado = ? WHERE id = ?";
+        try (Connection conn = conectar();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, nuevoEstado);
+            stmt.setInt(2, idCompra);
+            int affectedRows = stmt.executeUpdate();
+            return affectedRows > 0;
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return false;
+    }
     public boolean insertarProducto(String nombre, BigDecimal precio) {
         String query = "INSERT INTO Producto (nombre, precio) VALUES (?, ?)";
         try (Connection conn = conectar();
